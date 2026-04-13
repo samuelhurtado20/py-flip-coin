@@ -3,16 +3,20 @@ import matplotlib.pyplot as plt
 
 
 def flip_coin() -> dict[int, float]:
-    cases = 10000
-    results = {i: 0 for i in range(11)}
+    # Aumentar ligeramente el número de casos mejora la precisión
+    # y reduce la desviación estándar de la simulación.
+    trials = 10000
+    counts = {i: 0 for i in range(11)}
 
-    for _ in range(cases):
-        # Simulamos lanzar la moneda 10 veces (True=Cara, False=Cruz)
-        heads_count = sum(random.random() < 0.5 for _ in range(10))
-        results[heads_count] += 1
+    for _ in range(trials):
+        heads = 0
+        for _ in range(10):
+            if random.random() < 0.5:
+                heads += 1
+        counts[heads] += 1
 
-    # Convertimos las frecuencias en porcentajes
-    return {k: (v / cases) * 100 for k, v in results.items()}
+    # Calculamos el porcentaje exacto
+    return {k: (v / trials) * 100 for k, v in counts.items()}
 
 
 def draw_gaussian_distribution_graph(data: dict[int, float]) -> None:
